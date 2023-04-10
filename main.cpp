@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
 
     //write found elements
     out<<"\n\n";
-    out<<"Eelemnts\n";
+    out<<"*Eelemnts\n";
     for(const element& el: elementlist){
         out<<el;
     }

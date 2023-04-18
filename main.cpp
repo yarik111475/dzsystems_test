@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
@@ -25,7 +26,11 @@ struct point
     int index_ {};
     double x_,y_,z_;
     friend std::ostream& operator<<(std::ostream& out, const point& pt){
-        out<<pt.index_<<", "<<pt.x_<<", "<<pt.y_<<", "<<pt.z_<<"\n";
+        out<<pt.index_<<", "
+           <<std::setw(6)<<pt.x_<<", "
+           <<std::setw(6)<<pt.y_<<", "
+           <<std::setw(6)<<pt.z_
+           <<std::endl;
         return out;
     }
 };
@@ -38,7 +43,11 @@ struct element
         :index_{index},pt1_{pt1},pt2_{pt2},pt3_{pt3}{
     }
     friend std::ostream& operator<<(std::ostream& out, const element& el){
-        out<<el.index_<<", "<<el.pt1_<<", "<<el.pt2_<<", "<<el.pt3_<<"\n";
+        out<<el.index_<<", "
+           <<std::setw(6)<<el.pt1_<<", "
+           <<std::setw(6)<<el.pt2_<<", "
+           <<std::setw(6)<<el.pt3_
+           <<std::endl;
         return out;
     }
 };
@@ -62,15 +71,16 @@ int main(int argc, char* argv[])
     }
     catch(std::exception& e){
         std::cout<<e.what()<<std::endl;
+        std::getchar();
         return EXIT_FAILURE;
     }
-
     //create input file path and check if file exists
     const boost::filesystem::path in_path {v_map.at("input").as<std::string>()};
     if(!boost::filesystem::exists(in_path)){
         const std::string& msg {(boost::format("input file not found, path: %s")
                     % in_path).str()};
         std::cerr<<msg<<std::endl;
+        std::getchar();
         return EXIT_FAILURE;
     }
 
@@ -143,15 +153,19 @@ int main(int argc, char* argv[])
     std::ofstream out(out_path.string());
 
     //write all nodes
-    out<<"* N, X Y Z\n";
-    out<<"*Nodes\n";
+    out<<"*N,"
+        <<std::setw(6)<<"X,"
+        <<std::setw(6)<<"Y,"
+        <<std::setw(6)<<"Z"
+        <<std::endl;
+    out<<"*Nodes"<<std::endl;
     for(const point& pt: pointlist){
         out<<pt;
     }
 
     //write found elements
-    out<<"\n\n";
-    out<<"*Eelemnts\n";
+    out<<std::endl<<std::endl;
+    out<<"*Eelemnts"<<std::endl;
     for(const element& el: elementlist){
         out<<el;
     }
@@ -159,6 +173,6 @@ int main(int argc, char* argv[])
     std::cout<<"all operations finished"<<std::endl;
     std::cout<<"ponts in pointlist: "<<pointlist.size()<<std::endl;
     std::cout<<"elements in elementlist: "<<elementlist.size()<<std::endl;
-
+    std::getchar();
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 set(PROJECT_NAME dzsystems_test)
+set(TARGET_NAME dzsystems)
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -24,12 +25,12 @@ find_package(Boost 1.76.0 EXACT COMPONENTS
     program_options
 )
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${TARGET_NAME} main.cpp)
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${TARGET_NAME} PRIVATE
     ${Boost_INCLUDE_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${TARGET_NAME}
     ${Boost_LIBRARIES}
 )

@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
                 const double& ca {sqrt(ca_x_pow + ca_y_pow + ca_z_pow)};
 
                 if(ab!=bc && bc!=ca && ca!=ab){
-                    element el {element_index,i,j,k};
+                    element el {element_index,i+1,j+1,k+1};
                     elementlist.push_back(el);
                     element_index++;
                 }
